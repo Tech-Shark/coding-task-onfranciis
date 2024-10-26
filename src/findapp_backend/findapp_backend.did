@@ -1,0 +1,3 @@
+service : {
+    "send": (text, text, text, text, text) -> (text);
+}

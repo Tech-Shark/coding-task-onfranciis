@@ -1,85 +1,61 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/n8771WqG)
-# Data
+# `findapp`
 
-### Developers Name 
+Welcome to your new `findapp` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
 
-# Finance Dapp Coding Challenge
+To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
 
-Welcome to the coding challenge! We’re excited to see what you can create. This challenge is designed to evaluate your skills in building decentralized applications (Dapps), handling APIs, and integrating with AI services. The challenge consists of two main tasks:
+To learn more before you start working with `findapp`, see the following documentation available online:
 
-## Challenge Overview
+- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
+- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
+- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
+- [ic-cdk](https://docs.rs/ic-cdk)
+- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
+- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
 
-### 1. Finance Application: Frontend and Backend
+If you want to start working on your project right away, you might want to try the following commands:
 
-Your task is to build a simple decentralized finance application (Dapp) that allows users to input their financial goals and sends the data to an AI service. This will include both the frontend and backend components.
-
-Frontend: Design a user interface where users can input their financial information, including:
-
-```
-Purpose (e.g., "Save for a new car")
-Timeframe (e.g., "12 months")
-Total Amount (e.g., $10,000)
-Monthly Income (e.g., $2,500)
-Monthly Expenses (e.g., $2,000)
-
+```bash
+cd findapp/
+dfx help
+dfx canister --help
 ```
 
+## Running the project locally
 
-Backend: Develop a server that processes the user input and sends it to the AI service in the following JSON format:
+If you want to test your project locally, you can use the following commands:
 
+```bash
+# Starts the replica, running in the background
+dfx start --background
+
+# Deploys your canisters to the replica and generates your candid interface
+dfx deploy
 ```
 
-{
-  "purpose": "Save for a new car",
-  "timeframe": "12 months",
-  "total_amount": 10000,
-  "total_income_monthly": 2500,
-  "total_expenses_monthly": 2000
-}
+Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
 
+If you have made changes to your backend canister, you can generate a new candid interface with
 
+```bash
+npm run generate
 ```
 
-You can use Rust technology stack for this challenge. Ensure that the backend can send the request and handle the response from the AI service.
-this is the url.  
+at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
 
-### endpoint for the simple finance app. 
+If you are making frontend changes, you can start a development server with
 
-``` https://icp-api-budget.fly.dev/budget-plan ```
+```bash
+npm start
+```
 
+Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
 
----
+### Note on frontend environment variables
 
-### 2. Simple frontend and Canister Code for Fetching Forex Data
+If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
 
-As part of this challenge, you will write a canister (smart contract) in Motoko or Rust to fetch data from a Forex API and display it. This requires integrating with any public Forex API to get live exchange rates (e.g., Fixer.io or Open Exchange Rates).
-
-
-Make sure the Forex data is correctly fetched and displayed within the app.
-
-
----
-
-### Additional Resources
-
-For more information on how to build canisters, you can refer to the DFINITY website here: DFINITY https://internetcomputer.org/ - The Internet Computer.
-
-
----
-
-Submission
-
-Please upload your code to a GitHub repository and share the link. Ensure that your repository includes:
-
-A README file that explains how to run both the frontend and backend of your app.
-
-Clear documentation of how the canister code works.
-
-
-We look forward to seeing your submission!
-
-
----
-
-This challenge will give us insight into your full-stack development skills and your ability to integrate with decentralized systems and external APIs.
----
+- set`DFX_NETWORK` to `ic` if you are using Webpack
+- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
+  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
+- Write your own `createActor` constructor

@@ -1,0 +1,24 @@
+{
+  "canisters": {
+    "findapp_backend": {
+      "candid": "src/findapp_backend/findapp_backend.did",
+      "package": "findapp_backend",
+      "type": "rust",
+      "http_request": true
+    },
+    "findapp_frontend": {
+      "dependencies": ["findapp_backend"],
+      "source": ["src/findapp_frontend/dist"],
+      "type": "assets",
+      "workspace": "findapp_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
